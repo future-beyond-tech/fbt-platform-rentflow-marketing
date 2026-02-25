@@ -2,8 +2,22 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSql } from "@/lib/db";
 
 const ADMIN_KEY = process.env.ADMIN_SECRET_KEY;
+const IS_LEAN_BACKEND = process.env.ENABLE_LEAN_BACKEND === "true";
+
+// When deploying with static export (ENABLE_LEAN_BACKEND !== "true"),
+// mark this route as static-safe and return a simple 404 JSON response.
+// When running with a real backend (ENABLE_LEAN_BACKEND === "true"),
+// force dynamic behavior so the DB-backed export works as an API.
+export const dynamic = IS_LEAN_BACKEND ? "force-dynamic" : "force-static";
 
 export async function GET(request: NextRequest) {
+  if (!IS_LEAN_BACKEND) {
+    return NextResponse.json(
+      { success: false, error: "Admin export is not available in static export deployments." },
+      { status: 404 }
+    );
+  }
+
   try {
     const sql = getSql();
     if (!sql) {
