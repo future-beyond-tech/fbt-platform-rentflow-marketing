@@ -1,0 +1,130 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --foreground-rgb: 15, 23, 42;
+    --background-start-rgb: 255, 255, 255;
+    --background-end-rgb: 255, 255, 255;
+}
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+        -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+        color: rgb(var(--foreground-rgb));
+        background: linear-gradient(
+                to bottom,
+                transparent,
+                rgb(var(--background-end-rgb))
+        )
+        rgb(var(--background-start-rgb));
+        min-height: 100dvh;
+        overflow-x: hidden;
+    }
+}
+
+@layer utilities {
+    .text-balance {
+        text-wrap: balance;
+    }
+
+    .gradient-text {
+        @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600;
+    }
+
+    .glass-effect {
+        @apply bg-white/80 backdrop-blur-md border border-white/20;
+    }
+
+    .hover-lift {
+        @apply transition-transform duration-300 hover:-translate-y-1;
+    }
+
+    .animate-float {
+        animation: float 6s ease-in-out infinite;
+    }
+
+    .animate-pulse-slow {
+        animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    .animate-gradient {
+        background-size: 200% 200%;
+        animation: gradient 8s ease infinite;
+    }
+
+    /* Responsive typography (fluid scaling) */
+    .text-fluid-lg {
+        font-size: clamp(1rem, 2vw + 0.5rem, 1.125rem);
+    }
+
+    .text-fluid-xl {
+        font-size: clamp(1.125rem, 2.5vw + 0.5rem, 1.25rem);
+    }
+
+    .text-fluid-2xl {
+        font-size: clamp(1.25rem, 3vw + 0.5rem, 1.5rem);
+    }
+
+    .text-fluid-3xl {
+        font-size: clamp(1.5rem, 4vw + 0.5rem, 1.875rem);
+    }
+
+    /* Prevent layout overflow in flex/grid children */
+    .min-w-0 {
+        min-width: 0;
+    }
+
+    /* Safe tap target (min 44px) */
+    .tap-target {
+        min-height: 44px;
+        min-width: 44px;
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+::selection {
+    background: rgba(59, 130, 246, 0.2);
+    color: #1e40af;
+}
